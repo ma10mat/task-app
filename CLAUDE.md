@@ -2,7 +2,60 @@
 
 ## プロジェクト概要
 
-タスク管理アプリケーション。技術スタックや要件はプロジェクト開始時に追記すること。
+タスク管理アプリケーション。テキスト入力によるタスクの追加・完了切り替え・削除ができる。タスクは localStorage に永続化される。
+
+---
+
+## デプロイ先
+
+**GitHub Pages:** https://ma10mat.github.io/task-app/
+
+`main` ブランチへのプッシュで GitHub Actions が自動ビルド＆デプロイする（[.github/workflows/deploy.yml](.github/workflows/deploy.yml)）。
+
+---
+
+## 技術スタック
+
+| 種別 | 技術 |
+|------|------|
+| UI ライブラリ | React 19 |
+| ビルドツール | Vite 6 |
+| スタイリング | CSS Modules |
+| 状態管理 | React `useState` / `useEffect`（外部ライブラリなし） |
+| データ永続化 | `localStorage` |
+| 言語 | JavaScript (JSX) |
+| パッケージ管理 | npm |
+
+---
+
+## コンポーネント設計
+
+### ファイル・ディレクトリ構成
+
+```
+src/
+├── App.jsx                   # ルート。tasks の状態管理と localStorage 読み書き
+├── App.css                   # アプリ全体レイアウト
+├── index.css                 # グローバルスタイル・CSS 変数（ライト/ダークテーマ）
+├── main.jsx                  # エントリーポイント
+└── components/
+    ├── TaskInput.jsx         # テキスト入力フォーム
+    ├── TaskInput.module.css
+    ├── TaskList.jsx          # タスク一覧（空状態メッセージも担当）
+    ├── TaskList.module.css
+    ├── TaskItem.jsx          # 個別タスク行（チェックボックス・削除ボタン）
+    └── TaskItem.module.css
+```
+
+### 命名規約
+
+- **コンポーネントファイル**: PascalCase（例: `TaskItem.jsx`）
+- **CSS Modules ファイル**: コンポーネント名に `.module.css` を付ける（例: `TaskItem.module.css`）
+- **コンポーネント関数**: PascalCase の名前付き `export default`
+- **クラス名（CSS Modules 内）**: camelCase（例: `.deleteButton`, `.completed`）
+- **props**: camelCase（例: `onAdd`, `onToggle`, `onDelete`）
+- **状態変数**: camelCase の名詞（例: `tasks`, `text`）
+- **イベントハンドラ**: `handle` プレフィックス（例: `handleSubmit`）
 
 ---
 
@@ -75,20 +128,13 @@ Update README with setup instructions
 - 不要な抽象化・将来のための設計は行わない
 - セキュリティ: ユーザー入力は必ずバリデーションする、SQL インジェクション・XSS に注意
 
-### ファイル・ディレクトリ構成
-
-プロジェクト開始時に追記すること。
-
 ---
 
 ## セットアップ
 
-初回セットアップ手順をここに追記すること。
-
 ```powershell
-# 例
 npm install
-npm run dev
+npm run dev   # http://localhost:5173
 ```
 
 ---
